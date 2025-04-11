@@ -1,4 +1,4 @@
-# IDENTIFIKASI PEFORMA JARINGAN
+# IDENTIFIKASI PEFORMA JARINGAN MENGGUNAKAN ALGORITMA NAIVE BAYES
 
 1. INSTALL SOFTWARE PENDUKUNG
    a. Python (https://www.python.org/downloads/)
@@ -18,3 +18,5 @@
    2). Ketik "cd frontend"
    3). Ketik "npm run dev"
    4). Buka browser dan kunjungi http://localhost:5173/
+
+By Aprilian Gevindo
