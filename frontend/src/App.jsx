@@ -14,13 +14,12 @@ import {
   Cell,
 } from "recharts";
 
-// Mapping warna berdasarkan status
 const STATUS_COLORS = {
-  "Sangat Baik": "#34D399", // Hijau
-  Baik: "#A78BFA", // Ungu
-  Cukup: "##60A5FA", // Kuning
-  Buruk: "#FBBF24", // Biru
-  "Sangat Buruk": "#F87171", // Merah
+  "Sangat Baik": "#34D399",
+  Baik: "#A78BFA",
+  Cukup: "#60A5FA",
+  Buruk: "#FBBF24",
+  "Sangat Buruk": "#F87171",
 };
 
 const App = () => {
@@ -32,7 +31,7 @@ const App = () => {
 
     const fetchData = () => {
       axios
-        .get("http://127.0.0.1:5000/api/identifikasi-peforma")
+        .get("http://127.0.0.1:5000/api/network-status")
         .then((res) => {
           if (isMounted) {
             setData(res.data);
@@ -88,14 +87,14 @@ const App = () => {
       case "Cukup":
         return (
           <span
-            className={`${baseStyle} bg-yellow-300 text-black border-yellow-400`}>
+            className={`${baseStyle} bg-blue-400 text-white border-blue-500`}>
             {status}
           </span>
         );
       case "Buruk":
         return (
           <span
-            className={`${baseStyle} bg-blue-400 text-white border-blue-500`}>
+            className={`${baseStyle} bg-yellow-300 text-black border-yellow-400`}>
             {status}
           </span>
         );
@@ -122,7 +121,7 @@ const App = () => {
         <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
           <h1 className="text-gray-900 text-center dark:text-white text-3xl md:text-5xl font-extrabold mb-2">
             Identifikasi Peforma Jaringan Menggunakan Algorithma Naive Bayes
-            Pada Ruangan MKOM 44B
+            Pada Hostpot UPI-YPTK Padang
           </h1>
         </div>
 
@@ -155,16 +154,21 @@ const App = () => {
                     <Tooltip />
                     <Legend />
                     <Bar
-                      dataKey="throughput"
+                      dataKey="throughput_mbps"
                       fill="#3B82F6"
                       name="Throughput"
                     />
-                    <Bar dataKey="delay" fill="#F59E0B" name="Delay" />
-                    <Bar dataKey="jitter" fill="#10B981" name="Jitter" />
+                    <Bar dataKey="delay_ms" fill="#F59E0B" name="Delay" />
+                    <Bar dataKey="jitter_ms" fill="#10B981" name="Jitter" />
                     <Bar
-                      dataKey="packet_loss"
+                      dataKey="packet_loss_percent"
                       fill="#EF4444"
                       name="Packet Loss"
+                    />
+                    <Bar
+                      dataKey="availability_percent"
+                      fill="#A78BFA"
+                      name="Availability"
                     />
                   </BarChart>
                 </ResponsiveContainer>
@@ -211,7 +215,7 @@ const App = () => {
                       {pieData().map((entry, index) => (
                         <Cell
                           key={`cell-${index}`}
-                          fill={STATUS_COLORS[entry.name] || "#D1D5DB"} // fallback: abu-abu
+                          fill={STATUS_COLORS[entry.name]}
                         />
                       ))}
                     </Pie>
@@ -271,13 +275,21 @@ const App = () => {
                       <tr
                         key={index}
                         className="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td className="px-6 py-4">{index + 1}</td>
-                        <td className="px-6 py-4">{row.ip}</td>
-                        <td className="px-6 py-4">{row.throughput} Kbps</td>
-                        <td className="px-6 py-4">{row.delay} ms</td>
-                        <td className="px-6 py-4">{row.jitter} ms</td>
-                        <td className="px-6 py-4">{row.packet_loss} %</td>
-                        <td className="px-6 py-4">{row.availability} %</td>
+                        <th className="px-6 py-4">{index + 1}</th>
+                        <th className="px-6 py-4">{row.ip}</th>
+                        <td className="px-6 py-4">
+                          {row.throughput_kbps < 1000
+                            ? row.throughput_kbps + " Kbps"
+                            : row.throughput_mbps + " Mbps"}
+                        </td>
+                        <td className="px-6 py-4">{row.delay_ms} ms</td>
+                        <td className="px-6 py-4">{row.jitter_ms} ms</td>
+                        <td className="px-6 py-4">
+                          {row.packet_loss_percent} %
+                        </td>
+                        <td className="px-6 py-4">
+                          {row.availability_percent} %
+                        </td>
                         <td className="px-6 py-4">
                           {getStatusBadge(row.status)}
                         </td>
