@@ -14,6 +14,8 @@ from colorama import Fore, Style
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+# MRTG or PRTG
+
 app = Flask(__name__)
 CORS(app)
 

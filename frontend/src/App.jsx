@@ -182,7 +182,7 @@ const App = () => {
         </div>
 
         {/* PIE CHART */}
-        <div className="grid md:grid-cols-1 gap-8 mt-10">
+        <div className="grid md:grid-cols-1 gap-8 mt-5">
           <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12">
             <a
               href="#"
@@ -248,7 +248,7 @@ const App = () => {
               </svg>
               Identifikasi
             </a>
-            <h2 className="text-gray-900 dark:text-white text-3xl font-extrabold mb-3 mt-2">
+            <h2 className="text-gray-900 dark:text-white text-3xl font-extrabold mb-3 mt-5">
               Data Identifikasi Peforma Jaringan
             </h2>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
